@@ -112,7 +112,7 @@ const triassicOnly = function(dinoObjs) {
 
 const notTriassic = function(dinoObjs) {
   return dinoObjs.filter(function(dinoObj) {
-    dinoObj.period != "Triassic";
+    return dinoObj.period !== "Triassic";
   })
 }
 
