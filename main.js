@@ -1,13 +1,120 @@
+const dinos = require('./dinos.js')
+
+const makeDino = function(name, era, eatsMeat, isExtinct = false) {
+  const dinoObj = {
+    species: name,
+    period: era,
+    carnivore: eatsMeat,
+    extinct: isExtinct,
+  }
+  return dinoObj;
+}
+
 /********************
  * HELPER FUNCTIONS *
  ********************/
 
 
+const makeSingular = function(dinoObj) {
+  let newDino = makeDino(dinoObj.species, dinoObj.period, dinoObj.carnivore, dinoObj.extinct);
+  if (dinoObj.species.slice(-2) === "us") {
+    newDino.species = newDino.species.slice(0, -2);
+    return newDino;
+  }
+  return newDino;
+}
+
+const truncateSpecies = function(dinoObj) {
+  let newDino = makeDino(dinoObj.species, dinoObj.period, dinoObj.carnivore, dinoObj.extinct);
+  if (dinoObj.species.length > 10) {
+    newDino.species = newDino.species.slice(0, 7) + "...";
+    return newDino;
+  }
+  return newDino;
+}
+
+const makeExtinct = function(dinoObj) {
+  let newDino = makeDino(dinoObj.species, dinoObj.period, dinoObj.carnivore, true);
+  return newDino;
+}
+
+const isCarnivore = function(dinoObj) {
+  return dinoObj.carnivore;
+}
+
+const isExtinct = function(dinoObj) {
+  return dinoObj.extinct;
+}
+
+const isTriassic = function(dinoObj) {
+  if (dinoObj.period === "Triassic") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const isJurassic = function(dinoObj) {
+  if (dinoObj.period === "Jurassic") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const isCretaceous = function(dinoObj) {
+  if (dinoObj.period === "Cretaceous") {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 /***********************
  * ITERATION FUNCTIONS *
  **********************/
 
+const singularizeDinos = function(dinoObjs) {
+  return dinoObjs.map(makeSingular);
+}
+
+const truncateDinos = function(dinoObjs) {
+  return dinoObjs.map(truncateSpecies);
+}
+
+const makeAllExtinct = function(dinoObjs) {
+  return dinoObjs.map(makeExtinct);
+}
+
+const carnivoresOnly = function(dinoObjs) {
+  return dinoObjs.filter(isCarnivore);
+}
+
+const herbivoresOnly = function(dinoObjs) {
+  return dinoObjs.filter(function(dinoObj) {
+    return dinoObj.carnivore === false;
+  });
+}
+
+const extinctOnly = function(dinoObjs) {
+  return dinoObjs.filter(isExtinct);
+}
+
+const notExtinct = function(dinoObjs) {
+  return dinoObjs.filter(function(dinoObj) {
+    return dinoObj.extinct === false;
+  });
+}
+
+const triassicOnly = function(dinoObjs) {
+  return dinoObjs.filter(isTriassic);
+}
+
+const notTriassic = function(dinoObjs) {
+  return dinoObjs.filter(function(dinoObj) {
+    dinoObj.period != "Triassic";
+  })
+}
 
 
 /*********************************
